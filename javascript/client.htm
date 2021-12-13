@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MIDI WebSocket Client Example</title>
+  <script src="eventemitter.min.js"></script>
+  <script src="midiwsclient.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      var wsURL = document.getElementById("wsURL").value;
+      var midiWsClient = new MidiWsClient(wsURL);
+
+      midiWsClient.on('connecting', function (wsUrl) {
+        console.log('Connecting ...'+wsURL);
+      });
+      midiWsClient.on('connect', function() {
+        console.log('Connected.');
+      });
+      midiWsClient.on('disconnect', function(event) {
+        console.log('Disconnected (' + event.code + ')');
+      });
+      midiWsClient.on('error', function(event) {
+        if (null != event.message)
+          console.log('Error (' + event.message + ')');
+      });
+      midiWsClient.on('message', function(bytes) {
+        console.log('Received MIDI bytes: ' + bytes);
+      });
+      midiWsClient.start();
+    };
+
+    // CLICK HANDLERs
+    $('#ws-sendbutton').click(()=>{
+      midiWsClient.send(new Uint8Array([144, 0, 20])); // send MIDI
+    });
+
+    $('#ws-sendmidiID').click(()=>{
+      midiWsClient.sendMidiId('hhromicMIDIws'); // server uses for MIDI routing
+    });
+   </script>
+</head>
+<body>
+<h3>MIDI WebSocket Client Example</h3>
+<font size=+2)
+<fieldset id="serverLocation">
+    <legend>Server Location</legend>
+    <div>
+        <input type="text" style="font-size:24pt;" id="wsURL" value="ws://localhost:5000" size="64">
+        <span id="status"></span>
+    </div>
+</fieldset>
+<fieldset id="requestSection">
+    <legend>Request</legend>
+    <form id="form">
+        <input type="submit" type="submit" value="Send" ; disabled/>
+        <input type="text" id="msg" size="80"/>
+    </form>
+</fieldset>
+<section>
+    <div id="sendMIDIid">
+        <input type="text" id="ws-midiID" value=""> <button id="ws-sendmidiID">SEND</button>
+    </div>
+</section>
+
+<section>
+    <div id="sendMessage">
+        <input type="text" id="ws-message" value=""> <button id="ws-sendbutton">SEND</button>
+    </div>
+</section> 
+<fieldset id="responseMsgSection">
+    <legend>Response</legend>
+    <div id="log"></div>
+</fieldset>
+</font>
+</body>
+</html>

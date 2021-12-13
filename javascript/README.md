@@ -2,12 +2,15 @@
 
 ## Requirements
 
-The programs included depends on the very good [EventEmitter][evemit] library from Oliver Caldwell. Make sure it is loaded before. For example:
+The programs included depends on the very good [EventEmitter][evemit] library from Oliver Caldwell.
+ Make sure it is loaded before. For example:
 
     <script src="eventemitter.min.js"></script>
     <script src="midiwsclient.js"></script>
 
-[evemit]: https://github.com/Olical/EventEmitter
+Get pre-built versions of EventEmitter from the [downloads page](https://github.com/Olical/EventEmitter/downloads).  
+- [EventEmitter Guide](https://github.com/Olical/EventEmitter/blob/master/docs/guide.md)
+- [EventEmitter API](https://github.com/Olical/EventEmitter/blob/master/docs/api.md)
 
 ## MIDI WebSocket Client
 
